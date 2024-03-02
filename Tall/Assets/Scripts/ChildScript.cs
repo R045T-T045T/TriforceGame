@@ -20,16 +20,13 @@ public class ChildScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            {
-                PlayerController playerController = collision.GetComponent<PlayerController>();
-                if (playerController != null)
+            PlayerController playerController = collision.GetComponent<PlayerController>();
+            if (playerController != null)
                 {
-                    Debug.Log("Child detected");
-                    playerController.ApplySlowdown();
-                    Destroy(gameObject);  
+                    playerController.ApplySpeed();
+                    Debug.Log("Detective detected");
+                    Destroy(gameObject);
                 }
-                
-            }
         }
     }
 }

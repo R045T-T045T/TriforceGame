@@ -8,15 +8,12 @@ public class DetectiveScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            {
                 PlayerController playerController = collision.GetComponent<PlayerController>();
                 if (playerController != null)
                 {
                     playerController.ApplySpeed();
                     Debug.Log("Detective detected");
                 }
-
-            }
         }
     }
 }

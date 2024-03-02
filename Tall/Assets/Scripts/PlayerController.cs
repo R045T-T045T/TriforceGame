@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isFacingRight;
 
     [SerializeField] private float tallSpeed;
+    public float slowedSpeed = 2f;
     private bool isSlowed = false;
-    private bool isMoreSlowed = false;
 
     [SerializeField] float aloneSpeed;
 
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         if (isSlowed)
         {
             isSlowed = false;
-            moveSpeed = tallSpeed;
+            moveSpeed -= tallSpeed;
         }
 
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -59,22 +59,24 @@ public class PlayerController : MonoBehaviour
 
     public void ApplySlowdown()
     {
-        if(isAlone == false)
+        if(isTall == false)
         {
+            Debug.Log("slowing Down");
+            isAlone = false;
             isSlowed = true;
             isTall = true;
-            moveSpeed = tallSpeed;
+            moveSpeed -= tallSpeed;
         }
     }
-
     public void ApplySpeed()
     {
-        if(isTall == true)
+        if(isAlone == false)
         {
+            Debug.Log("speeding Up");
             isAlone = true;
             isSlowed = false;
             isTall = false;
-            moveSpeed = aloneSpeed;
+            moveSpeed += aloneSpeed;
         }
     }
 
