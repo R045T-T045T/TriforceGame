@@ -21,7 +21,13 @@ public class ChildScript : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             {
-                Destroy(gameObject);
+                PlayerController playerController = collision.GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    playerController.ApplySlowdown();
+                    Destroy(gameObject);  
+                }
+                
             }
         }
     }

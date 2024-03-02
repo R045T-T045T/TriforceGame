@@ -5,33 +5,68 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
-    private float moveHorizontal;
-    private bool isFacingRight = true;
+    [SerializeField] private float horizontal;
+    [SerializeField] private bool isFacingRight;
+
+    [SerializeField] private float tallSpeed;
+    private bool isSlowed = false;
+
+    [SerializeField] float aloneSpeed;
 
     [SerializeField] private Rigidbody2D rb;
+
+    [SerializeField] public bool isAlone;
+    [SerializeField] public bool isMoving;
+    [SerializeField] Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        moveSpeed = aloneSpeed;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
+        if (isSlowed)
+        {
+            isSlowed = false;
+            moveSpeed = tallSpeed;
+        }
+
+        horizontal = Input.GetAxisRaw("Horizontal");
+
         Flip();
+
+        if(rb.velocity.x <= 0.1f)
+        {
+            isMoving = true;
+        }
+        else if (Mathf.Approximately(rb.velocity.x, 0f))
+        {
+            isMoving = false;
+        }
     }
 
     // Updating with physics Engine
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
+    }
+
+    public void ApplySlowdown()
+    {
+        if(isAlone == false)
+        {
+            isSlowed = true;
+            moveSpeed = tallSpeed;
+        }
     }
 
     private void Flip()
     {
-        if (isFacingRight && moveHorizontal < 0f || !isFacingRight && moveHorizontal > 0f)
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
