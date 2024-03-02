@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PerkInventory : MonoBehaviour
 {
+    private int brokenRules = 0;
+
+    [SerializeField] private Text rulesText;
 
     // Start is called before the first frame update
     void Start()
@@ -17,20 +21,19 @@ public class PerkInventory : MonoBehaviour
         
     }
 
-    public void resetPerks()
+    public void addRule(Rule instance)
     {
-        Debug.Log("Reset Perks");
+        brokenRules++;
+        rulesText.text = "Rules; " + brokenRules;
     }
 
-    public void addPerks()
+    public void removeRule(Rule instance) 
     {
-        Debug.Log("adding Perks");
+        brokenRules--;
+        rulesText.text = "Rules; " + brokenRules;
+    }
+    public void Reset()
+    {
 
     }
-
-    public void removePerks() 
-    {
-        Debug.Log("removing Perks");
-    }
-
 }

@@ -28,7 +28,8 @@ public class PauseMenuUI : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        PauseMenu.SetActive(false);
+        SceneManager.LoadScene("SampleScene");
     }
 
     private void Update()

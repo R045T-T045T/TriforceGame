@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-    public void StartGame()
+    public GameObject MainMenu;
+
+    private void Awake()
     {
-        SceneManager.LoadScene("SampleScene");
+        Time.timeScale = 0;
     }
 
+    public void EnterGame()
+    {
+        Time.timeScale = 1;
+
+        MainMenu.SetActive(false);
+    }
     public void CloseGame()
     {
         if (Application.isEditor)
