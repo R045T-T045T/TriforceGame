@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d713cb479e67b404da549f90402ea327, type: 3}
+  m_Name: 1Rule_Fall
+  m_EditorClassIdentifier: 
+  uiSprite: {fileID: 0}
+  worldSprite_default: {fileID: -9095717837082945937, guid: 34587324d412940a79d530020c957dc0, type: 3}
+  worldSprite_damaged: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  effectIndex: 1

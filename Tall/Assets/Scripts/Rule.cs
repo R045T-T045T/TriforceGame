@@ -5,7 +5,36 @@ using UnityEngine.UI;
 
 public class Rule : MonoBehaviour
 {
-    [SerializeField] private RuleData data;
-    public Image UiSprite => data.UISprite;
-    public uint EffectIndex => data.EffectIndex;
+    private RuleData currentData;
+    public Image UiSprite => currentData.UISprite;
+    public uint EffectIndex => currentData.EffectIndex;
+
+    private SpriteRenderer renderer;
+    private BoxCollider2D collider;
+
+
+    public void InitializeAs(RuleData data)
+    {
+        currentData = data;
+        if (renderer == null) renderer = gameObject.AddComponent<SpriteRenderer>();
+        if(collider == null)
+        {
+            collider = gameObject.AddComponent<BoxCollider2D>();
+            collider.isTrigger = true;
+        }
+
+        renderer.sprite = data.WorldSprite_Def;
+
+        Vector2 newSize = new Vector2();
+        newSize.x = renderer.sprite.bounds.max.x;
+        newSize.y = renderer.sprite.bounds.max.y;
+        collider.size = newSize;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        RuleManager.DispatchEffect(this);
+        //Play Effect
+    }
 }
