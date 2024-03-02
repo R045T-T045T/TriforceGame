@@ -289,12 +289,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4bbf20317429f534ab8421580aa30d56, type: 2}
   - {fileID: 11400000, guid: a9bbe4baf2f53ad4ba2c48c0a92f820d, type: 2}
   - {fileID: 11400000, guid: 4935d469f69d7ed42b734fd2509b0e02, type: 2}
+  - {fileID: 11400000, guid: 367513d1398234e44ad648641d1e6505, type: 2}
+  - {fileID: 11400000, guid: dcfc0afa87e0a9c4a943f7c5387333a8, type: 2}
+  - {fileID: 11400000, guid: 8c076c4c210def8439d3a4fb5d57c17b, type: 2}
+  - {fileID: 11400000, guid: c28e6d5b8edc6884e80d79736901bc12, type: 2}
   obstacleAmount: 4
   scrollSpeed: 10
-  maxScrollSpeed: 100
-  boundingBox: {x: 9, y: 10}
-  startOffset: 20
-  scrollSpeedAdditionPerSecond: 0.01
+  maxScrollSpeed: 50
+  boundingBox: {x: 9, y: 6.5}
+  startOffset: 50
+  scrollSpeedAdditionPerSecond: 0.1
 --- !u!1 &1702164272
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +360,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183881a224d4d3d49b327e4f1758c0e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

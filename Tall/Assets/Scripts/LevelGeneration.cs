@@ -5,10 +5,12 @@ using static UnityEditor.Progress;
 
 public class LevelGeneration : MonoBehaviour
 {
-    private const float scrollAcceleration = .1f;
-    private static bool canScroll = true;
+    private const float scrollAcceleration = 1.0f;
     private static Vector2 finalBounds; public static Vector2 Bounds => finalBounds;
     public static void SetScrollStatus(bool status) => canScroll = status;
+    public static void SetClampFallSpeedStatus(bool status) => clampedFallSpeed = status;
+    public static void SetScrollDirection(float dir) => scrollDir = dir;
+    public static void SetObsMoveStatus(bool status) => obsCanMove = status;
 
 
     [SerializeField] private RuleData[] typePool;
@@ -19,6 +21,10 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private float startOffset = 5;
     [SerializeField] private float scrollSpeedAdditionPerSecond = .001f;
     private List<Rule> obstaclePool = new List<Rule>();
+    private static bool clampedFallSpeed = true;
+    private static bool canScroll = true;
+    private static bool obsCanMove = true;
+    private static float scrollDir = 1.0f;
     private float currentScrollSpeed;
 
     private void Awake()
@@ -31,8 +37,20 @@ public class LevelGeneration : MonoBehaviour
     private void ComputeScreenBounds()
     {
         //full HD 16/9 as reference
-        finalBounds.x *= (float)Screen.width / 1960.0f;
-        finalBounds.y *= (float)Screen.height / 1060.0f;
+        finalBounds.x *= (float)Screen.width / 1920.0f;
+        finalBounds.y *= (float)Screen.height / 1080.0f;
+    }
+
+    private void ComputeMoveLaneWS(Rule target)
+    {
+        float moveSize = Random.Range(0, boundingBox.x * .2f);
+        float movePivot = Random.Range(boundingBox.x * -.6f, boundingBox.x * .6f);
+        Vector3 randomLane;
+        randomLane.x = movePivot - moveSize;
+        randomLane.y = movePivot + moveSize;
+        randomLane.z = Random.Range(0, 5);
+
+        target.MoveLane = randomLane;
     }
 
     private void PlaceInitialObstacles()
@@ -51,14 +69,14 @@ public class LevelGeneration : MonoBehaviour
 
     private void AddSingleObstacle(int index)
     {
-        float heightWS = index * ((boundingBox.y * 2) / (float)obstacleAmount) - startOffset;
+        float heightWS = index * ((boundingBox.y * 2) / (float)obstacleAmount);
         float horizontalWS = Random.Range(-boundingBox.x, boundingBox.x);
 
         GameObject obstacle = new GameObject();
         obstacle.name = "Obstacle_Rule";
         obstacle.transform.position = new Vector3(
             horizontalWS,
-            heightWS,
+            heightWS - startOffset,
             0
             );
 
@@ -74,31 +92,47 @@ public class LevelGeneration : MonoBehaviour
         int ruleIndex = Random.Range(0, typePool.Length);
         RuleData type = typePool[ruleIndex];
         target.InitializeAs(type);
+        ComputeMoveLaneWS(target);
     }
     
     private void MoveRules()
     {
-        float speedTarget = canScroll ? 
-            Mathf.Clamp(scrollSpeed + (Time.time * scrollSpeedAdditionPerSecond), 0, maxScrollSpeed)
-            : 0;
-        currentScrollSpeed = Mathf.SmoothDamp(currentScrollSpeed, speedTarget, ref rf0, scrollAcceleration);
+        float fallSpeed = (scrollSpeed + (Time.time * scrollSpeedAdditionPerSecond)) * scrollDir;
+
+        if (clampedFallSpeed) fallSpeed = Mathf.Clamp(fallSpeed, -maxScrollSpeed, maxScrollSpeed);
+        else fallSpeed += (Time.time * scrollSpeedAdditionPerSecond * .25f) * scrollDir;
+
+        currentScrollSpeed = Mathf.SmoothDamp(currentScrollSpeed, (canScroll ? fallSpeed : 0), ref rf0, scrollAcceleration);
 
         foreach (Rule item in obstaclePool)
         {
-            bool outOfBounds = item.transform.position.y > boundingBox.y;
-            if (outOfBounds)
+            bool outOfP = item.transform.position.y > boundingBox.y;
+            bool outOfN = item.transform.position.y < -boundingBox.y;
+            bool outOfBounds = outOfP || outOfN;
+            if (outOfBounds && item.WasInside)
             {
                 item.transform.position = new Vector3(
                 Random.Range(-boundingBox.x, boundingBox.x),
-                item.transform.position.y - boundingBox.y * 2,
+                item.transform.position.y - boundingBox.y * 2 * (outOfP? 1.0f : -1.0f),
                 item.transform.position.z
                 );
                 AssignRandomType(item);
             }
             else
             {
+                if(!outOfBounds) item.WasInside = true;
+
+                Vector4 w = item.MoveLane;
+                if (obsCanMove) w.w += Time.deltaTime * item.MoveLane.z;
+                item.MoveLane = w;
+                float xPos = Mathf.Lerp(
+                    item.MoveLane.x,
+                    item.MoveLane.y,
+                    (Mathf.Sin(item.MoveLane.z * item.MoveLane.w) + 1.0f) * .5f
+                    );
+
                 item.transform.position = new Vector3(
-                item.transform.position.x,
+                xPos,
                 item.transform.position.y + currentScrollSpeed * Time.deltaTime,
                 item.transform.position.z
                 );

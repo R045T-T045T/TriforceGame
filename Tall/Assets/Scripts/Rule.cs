@@ -11,6 +11,8 @@ public class Rule : MonoBehaviour
 
     private SpriteRenderer renderer;
     private BoxCollider2D collider;
+    private bool wasInsideOnce = false; public bool WasInside { get => wasInsideOnce; set => wasInsideOnce = value; }
+    private Vector4 moveLane; public Vector4 MoveLane { get => moveLane; set => moveLane = value; }
 
 
     public void InitializeAs(RuleData data)

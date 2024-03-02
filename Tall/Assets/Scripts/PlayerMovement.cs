@@ -5,27 +5,23 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public static void SetMovementStatus(bool status) => canMove = status;
+    public static void SetVerticalStatus(bool status) => canVertical = status;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float accelerationInSeconds = .5f;
     [SerializeField] private float speed = 1.0f;
     private Vector2 targetVelocity;
     private static bool canMove = true;
+    private static bool canVertical = false;
 
     private void Update()
     {
         BoundsCheck(LevelGeneration.Bounds);
         Vector2 direction = new Vector2();
-        if (canMove)
-        {
-            float inputH = Input.GetAxisRaw("Horizontal");
-            float inputV = Input.GetAxisRaw("Vertical");
-            direction.x = inputH;
-        }
-        else
-        {
-            direction = Vector2.zero;
-        }
+        float inputH = canMove? Input.GetAxisRaw("Horizontal") : 0;
+        float inputV = canVertical ? Input.GetAxisRaw("Vertical") : 0;
+        direction.x = inputH;
+        direction.y = inputV;
 
 
         targetVelocity = Vector2.SmoothDamp(targetVelocity, direction, ref rfv0, accelerationInSeconds);
@@ -42,6 +38,19 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 newPosition = rb.position;
             newPosition.x -= bounds.x * 2;
+            rb.MovePosition(newPosition);
+        }
+
+        if (rb.position.y < -bounds.y)
+        {
+            Vector2 newPosition = rb.position;
+            newPosition.y += bounds.y * 2;
+            rb.MovePosition(newPosition);
+        }
+        else if (rb.position.y > bounds.y)
+        {
+            Vector2 newPosition = rb.position;
+            newPosition.y -= bounds.y * 2;
             rb.MovePosition(newPosition);
         }
     }
