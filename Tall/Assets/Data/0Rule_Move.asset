@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 0Rule_Move
   m_EditorClassIdentifier: 
   uiSprite: {fileID: 0}
-  worldSprite_default: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  worldSprite_damaged: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  worldSprite_default: {fileID: 21300000, guid: f3b4add09da66254c9d286045ce9c3ca, type: 3}
+  worldSprite_damaged: {fileID: 21300000, guid: f3b4add09da66254c9d286045ce9c3ca, type: 3}
   effectIndex: 0

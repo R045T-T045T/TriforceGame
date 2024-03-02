@@ -23,6 +23,7 @@ public class LevelGeneration : MonoBehaviour
 
     private void Awake()
     {
+        ComputeScreenBounds();
         PlaceInitialObstacles();
         finalBounds = boundingBox;
     }
@@ -88,7 +89,7 @@ public class LevelGeneration : MonoBehaviour
             if (outOfBounds)
             {
                 item.transform.position = new Vector3(
-                item.transform.position.x,
+                Random.Range(-boundingBox.x, boundingBox.x),
                 item.transform.position.y - boundingBox.y * 2,
                 item.transform.position.z
                 );
