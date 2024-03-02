@@ -7,12 +7,14 @@ public class Rule : MonoBehaviour
 {
     private RuleData currentData;
     public Image UiSprite => currentData.UISprite;
+    public Sprite WorldSprite => currentData.WorldSprite_Def;
     public uint EffectIndex => currentData.EffectIndex;
 
     private SpriteRenderer renderer;
     private BoxCollider2D collider;
     private bool wasInsideOnce = false; public bool WasInside { get => wasInsideOnce; set => wasInsideOnce = value; }
     private Vector4 moveLane; public Vector4 MoveLane { get => moveLane; set => moveLane = value; }
+    private bool isActive = true;
 
 
     public void InitializeAs(RuleData data)
@@ -31,12 +33,26 @@ public class Rule : MonoBehaviour
         newSize.x = renderer.sprite.bounds.max.x;
         newSize.y = renderer.sprite.bounds.max.y;
         collider.size = newSize;
+        UpdateState(true);
+    }
+
+    private void UpdateState(bool state)
+    {
+        isActive = state;
+        renderer.enabled = isActive;
+        collider.enabled = isActive;    
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Vector2 v = collision.GetComponent<Rigidbody2D>().velocity; 
         RuleManager.DispatchEffect(this);
-        //Play Effect
+        BreakParticles bp = BreakParticles.RequestInstance(this, v);
+        bp.transform.position = transform.position;
+        VFX.HitStop();
+        VFX.ScreenShake();
+        SoundEffects.PlayImpactSFX();
+        UpdateState(false);
     }
 }

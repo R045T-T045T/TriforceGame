@@ -24,7 +24,7 @@ public class LevelGeneration : MonoBehaviour
     private static bool clampedFallSpeed = true;
     private static bool canScroll = true;
     private static bool obsCanMove = true;
-    private static float scrollDir = 1.0f;
+    private static float scrollDir = 1.0f; public static float ScrollDir => scrollDir;
     private float currentScrollSpeed;
 
     private void Awake()
