@@ -712,7 +712,8 @@ MonoBehaviour:
   moveSpeed: 10
   horizontal: 0
   isFacingRight: 0
-  tallSpeed: 5
+  tallSpeed: 0
+  slowedSpeed: 2
   aloneSpeed: 10
   rb: {fileID: 1594189259}
   isAlone: 0
