@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,12 +11,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float tallSpeed;
     private bool isSlowed = false;
+    private bool isMoreSlowed = false;
 
     [SerializeField] float aloneSpeed;
 
     [SerializeField] private Rigidbody2D rb;
 
     [SerializeField] public bool isAlone;
+    [SerializeField] private bool isTall;
     [SerializeField] public bool isMoving;
     [SerializeField] Animator animator;
 
@@ -23,7 +26,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         moveSpeed = aloneSpeed;
-
     }
 
     // Update is called once per frame
@@ -60,7 +62,19 @@ public class PlayerController : MonoBehaviour
         if(isAlone == false)
         {
             isSlowed = true;
+            isTall = true;
             moveSpeed = tallSpeed;
+        }
+    }
+
+    public void ApplySpeed()
+    {
+        if(isTall == true)
+        {
+            isAlone = true;
+            isSlowed = false;
+            isTall = false;
+            moveSpeed = aloneSpeed;
         }
     }
 

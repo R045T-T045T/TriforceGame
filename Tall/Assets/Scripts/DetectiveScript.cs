@@ -2,20 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChildScript : MonoBehaviour
+public class DetectiveScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -24,11 +12,10 @@ public class ChildScript : MonoBehaviour
                 PlayerController playerController = collision.GetComponent<PlayerController>();
                 if (playerController != null)
                 {
-                    Debug.Log("Child detected");
-                    playerController.ApplySlowdown();
-                    Destroy(gameObject);  
+                    playerController.ApplySpeed();
+                    Debug.Log("Detective detected");
                 }
-                
+
             }
         }
     }

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Child
+  - Detective
   layers:
   - Default
   - TransparentFX
