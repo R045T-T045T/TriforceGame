@@ -54,6 +54,7 @@ public class Rule : MonoBehaviour
         VFX.HitStop();
         VFX.ScreenShake();
         SoundEffects.PlayImpactSFX();
+        ScoreManager.Increase();
         UpdateState(false);
     }
 }

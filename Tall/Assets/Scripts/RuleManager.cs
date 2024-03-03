@@ -5,12 +5,30 @@ using UnityEngine;
 
 public class RuleManager : MonoBehaviour
 {
+    private const float holdThrehshhold = .5f;
     public static void DispatchEffect(Rule rule) => effects[(int)rule.EffectIndex]();
-
+    private float holdTime = 0.0f;
 
     private void Awake()
     {
         InitActions();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey("r"))
+        {
+            holdTime += Time.deltaTime;
+            if(holdTime > holdThrehshhold)
+            {
+                FullGameReset();
+                holdTime = 0.0f;
+            }
+        }
+        else
+        {
+            holdTime = 0.0f;
+        }
     }
 
     //Static part
@@ -25,6 +43,14 @@ public class RuleManager : MonoBehaviour
         effects.Add(UnclampFallSpeed4);
         effects.Add(SetScrollDir5);
         effects.Add(ObsCanMove6);
+    }
+
+    public static void FullGameReset()
+    {
+        ResetPerks2();
+        LevelGeneration.ResetLevel();
+        PlayerMovement.FullReset();
+        ScoreManager.ResetScore();
     }
 
 

@@ -20,6 +20,7 @@ public class VFX : MonoBehaviour
 
     private void Update()
     {
+        if (PauseMenuUI.isPaused) return;
         Time.timeScale = Mathf.Lerp(Time.timeScale, 1.0f, hitStopSpeed * Time.deltaTime);
         Time.fixedDeltaTime = Mathf.Lerp(Time.fixedDeltaTime,.02f, hitStopSpeed * Time.deltaTime);
     }

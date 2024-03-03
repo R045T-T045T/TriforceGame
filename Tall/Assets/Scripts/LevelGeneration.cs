@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
+using static UnityEngine.Random;
 
 public class LevelGeneration : MonoBehaviour
 {
+    private static LevelGeneration instance;
+
     private const float scrollAcceleration = 1.0f;
 
     private static bool clampedFallSpeed = true;
@@ -20,6 +23,7 @@ public class LevelGeneration : MonoBehaviour
     public static void SetScrollDirection(float dir) => scrollDir = dir;
     public static void SetObsMoveStatus(bool status) => obsCanMove = status;
     public static void SetMoveStatus(bool status) => moveGame = status;
+    public static void ResetLevel() => instance.ResetLev();
 
 
 
@@ -35,6 +39,7 @@ public class LevelGeneration : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         ComputeScreenBounds();
         PlaceInitialObstacles();
         finalBounds = boundingBox;
@@ -147,6 +152,25 @@ public class LevelGeneration : MonoBehaviour
                 );
             }
         }
+    }
+
+    private void ResetLev()
+    {
+        for (int i = 0; i < obstacleAmount; i++)
+        {
+            float heightWS = i * ((boundingBox.y * 2) / (float)obstacleAmount);
+            float horizontalWS = UnityEngine.Random.Range(-boundingBox.x, boundingBox.x);
+
+            Rule obstacle = obstaclePool[i];
+            obstacle.transform.position = new Vector3(
+                horizontalWS,
+                heightWS - startOffset,
+                0
+            );
+        }
+
+        currentScrollSpeed = 0;
+        rf0 = 0;
     }
 
     private void OnDrawGizmos()

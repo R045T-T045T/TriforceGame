@@ -20,7 +20,7 @@ public class PauseMenuUI : MonoBehaviour
         {
             if (isPaused)
             {
-                StartCoroutine(ResumeGame());
+                if(PauseMenu.activeInHierarchy) StartCoroutine(ResumeGame());
             }
             else
             {
@@ -45,7 +45,7 @@ public class PauseMenuUI : MonoBehaviour
     public IEnumerator ResumeGame()
     {   
         PauseMenu.SetActive(false);
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(.5f);
         Time.timeScale = 1;
         isPaused = false;
     }

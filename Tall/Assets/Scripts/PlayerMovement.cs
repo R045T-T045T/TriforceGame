@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private static PlayerMovement instance; 
     public static void SetMovementStatus(bool status) => canMove = status;
     public static void SetVerticalStatus(bool status) => canVertical = status;
+    public static void FullReset() => instance.ResetMovement();
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float accelerationInSeconds = .5f;
@@ -13,6 +15,17 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 targetVelocity;
     private static bool canMove = true;
     private static bool canVertical = false;
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public void ResetMovement()
+    {
+        rb.velocity = Vector2.zero;
+        rfv0 = Vector2.zero;
+        transform.position = Vector2.zero;
+    }
 
     private void Update()
     {
