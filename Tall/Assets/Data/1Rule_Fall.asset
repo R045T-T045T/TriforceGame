@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiSprite: {fileID: 0}
   worldSprite_default: {fileID: 21300000, guid: 33cd223fc8141c242a52f1500cb12bb4, type: 3}
-  worldSprite_damaged: {fileID: 21300000, guid: 33cd223fc8141c242a52f1500cb12bb4, type: 3}
+  worldSprite_damaged: {fileID: 21300000, guid: 16beaa7a94cec274894770f81d1e787b, type: 3}
   effectIndex: 1

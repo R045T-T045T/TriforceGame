@@ -28,7 +28,7 @@ public class BreakParticles : MonoBehaviour, IDynamicPoolable
     {
         if(renderer == null) renderer = gameObject.AddComponent<SpriteRenderer>();
         if(rb == null) rb = gameObject.AddComponent<Rigidbody2D>();
-        renderer.sprite = source.WorldSprite;
+        renderer.sprite = source.DamagedSprite;
 
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0.0f;

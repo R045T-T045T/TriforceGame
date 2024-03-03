@@ -12,12 +12,14 @@ public class LevelGeneration : MonoBehaviour
     private static bool obsCanMove = true;
     private static float scrollDir = 1.0f; public static float ScrollDir => scrollDir;
     private static float cumulativeHeight;
+    private static bool moveGame = false;
 
     private static Vector2 finalBounds; public static Vector2 Bounds => finalBounds;
     public static void SetScrollStatus(bool status) => canScroll = status;
     public static void SetClampFallSpeedStatus(bool status) => clampedFallSpeed = status;
     public static void SetScrollDirection(float dir) => scrollDir = dir;
     public static void SetObsMoveStatus(bool status) => obsCanMove = status;
+    public static void SetMoveStatus(bool status) => moveGame = status;
 
 
 
@@ -110,6 +112,7 @@ public class LevelGeneration : MonoBehaviour
         cumulativeHeight += currentScrollSpeed * Time.deltaTime;
         Shader.SetGlobalFloat("_moveHeight", cumulativeHeight);
 
+        if (!moveGame) return;
         foreach (Rule item in obstaclePool)
         {
             bool outOfP = item.transform.position.y > boundingBox.y;

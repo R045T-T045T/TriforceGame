@@ -22,13 +22,31 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         scoreText.text = score.ToString() + " POINTS";
+        if(score > highscore) highscore = score;
         highscoreText.text = "HIGHSCORE: " + highscore.ToString();
     }
+
+    public static void Increase() => instance.AddPoint();
 
     public void AddPoint()
     {
         score += 1;
         scoreText.text = score.ToString() + " POINTS";
+        if(score > highscore) highscore = score;
+        highscoreText.text = "HIGHSCORE: " + highscore.ToString();
+    }
+
+    private void ResetS()
+    {
+        score = 0;
+        scoreText.text = score.ToString() + " POINTS";
+        if (score > highscore) highscore = score;
+        highscoreText.text = "HIGHSCORE: " + highscore.ToString();
+    }
+
+    public static void ResetScore()
+    {
+        instance.ResetS();
     }
 
     // Update is called once per frame

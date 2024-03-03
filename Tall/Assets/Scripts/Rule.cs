@@ -8,6 +8,7 @@ public class Rule : MonoBehaviour
     private RuleData currentData;
     public Image UiSprite => currentData.UISprite;
     public Sprite WorldSprite => currentData.WorldSprite_Def;
+    public Sprite DamagedSprite => currentData.WorldSprite_Damaged;
     public uint EffectIndex => currentData.EffectIndex;
 
     private SpriteRenderer renderer;
