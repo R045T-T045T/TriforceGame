@@ -36,6 +36,7 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private float scrollSpeedAdditionPerSecond = .001f;
     private List<Rule> obstaclePool = new List<Rule>();
     private float currentScrollSpeed;
+    private float accTime = 0.0f;
 
     private void Awake()
     {
@@ -108,10 +109,11 @@ public class LevelGeneration : MonoBehaviour
     
     private void MoveRules()
     {
-        float fallSpeed = (scrollSpeed + (Time.time * scrollSpeedAdditionPerSecond)) * scrollDir;
+        accTime += Time.deltaTime;
+        float fallSpeed = (scrollSpeed + (accTime * scrollSpeedAdditionPerSecond)) * scrollDir;
 
         if (clampedFallSpeed) fallSpeed = Mathf.Clamp(fallSpeed, -maxScrollSpeed, maxScrollSpeed);
-        else fallSpeed += (Time.time * scrollSpeedAdditionPerSecond) * scrollDir;
+        else fallSpeed += (accTime * scrollSpeedAdditionPerSecond) * scrollDir;
 
         currentScrollSpeed = Mathf.SmoothDamp(currentScrollSpeed, (canScroll ? fallSpeed : 0), ref rf0, scrollAcceleration);
         cumulativeHeight += currentScrollSpeed * Time.deltaTime;
@@ -171,6 +173,7 @@ public class LevelGeneration : MonoBehaviour
 
         currentScrollSpeed = 0;
         rf0 = 0;
+        accTime = 0.0f;
     }
 
     private void OnDrawGizmos()
