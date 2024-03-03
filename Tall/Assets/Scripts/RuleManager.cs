@@ -83,6 +83,7 @@ public class RuleManager : MonoBehaviour
     private static void UnclampFallSpeed4()
     {
         LevelGeneration.SetClampFallSpeedStatus(false);
+        LevelGeneration.SetScrollStatus(true);
     }
 
     private static void SetScrollDir5()
