@@ -309,6 +309,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 8272930684963587290, guid: e1289a85d7992704f84ff5805162e19c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1498773221}
+    - target: {fileID: 8272930684963587290, guid: e1289a85d7992704f84ff5805162e19c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8272930684963587290, guid: e1289a85d7992704f84ff5805162e19c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1289a85d7992704f84ff5805162e19c, type: 3}
 --- !u!224 &82308408 stripped
@@ -1056,6 +1068,14 @@ PrefabInstance:
     - target: {fileID: 668991420947760619, guid: d5c75391c3644d4429ddfe40c72c1b60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 668991421127562319, guid: d5c75391c3644d4429ddfe40c72c1b60, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1498773222}
+    - target: {fileID: 668991421127562319, guid: d5c75391c3644d4429ddfe40c72c1b60, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToMainMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5c75391c3644d4429ddfe40c72c1b60, type: 3}

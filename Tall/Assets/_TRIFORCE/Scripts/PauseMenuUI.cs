@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,7 @@ public class PauseMenuUI : MonoBehaviour
     }
     private void Update()
     {
+        if (MainMenuScript.isActive) return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -39,8 +41,7 @@ public class PauseMenuUI : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        PauseMenu.SetActive(false);
-        SceneManager.LoadScene("SampleScene");
+        Application.Quit();
     }    
     public IEnumerator ResumeGame()
     {   

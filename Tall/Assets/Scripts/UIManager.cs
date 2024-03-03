@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         LevelGeneration.SetMoveStatus(true);
+        MainMenuScript.isActive = false;
     }
 
     public void ExitGame() => Application.Quit();
