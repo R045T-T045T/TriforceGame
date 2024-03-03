@@ -7,43 +7,46 @@ public class PauseMenuUI : MonoBehaviour
 {
     public GameObject PauseMenu;
 
+    public static bool isPaused;
+
     private void Awake()
     {
         PauseMenu.SetActive(false);
+        isPaused = false;
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                StartCoroutine(ResumeGame());
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+    }
     private void PauseGame()
     {
         PauseMenu.SetActive(true);
-
         Time.timeScale = 0;
+        isPaused = true;
     }
 
-    public void ResumeGame()
-    {
-        Time.timeScale = 1; 
-
-        PauseMenu.SetActive(false);
-    }
+    public void ExecuteResumeGame() => StartCoroutine(ResumeGame());
 
     public void BackToMainMenu()
     {
         PauseMenu.SetActive(false);
         SceneManager.LoadScene("SampleScene");
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (PauseMenu.activeSelf)
-            {
-                ResumeGame();
-            }
-            else 
-            {
-                PauseGame();
-            }
-        }
+    }    
+    public IEnumerator ResumeGame()
+    {   
+        PauseMenu.SetActive(false);
+        yield return new WaitForSecondsRealtime(3f);
+        Time.timeScale = 1;
+        isPaused = false;
     }
 }
