@@ -30,8 +30,8 @@ public class Rule : MonoBehaviour
         renderer.sprite = data.WorldSprite_Def;
 
         Vector2 newSize = new Vector2();
-        newSize.x = renderer.sprite.bounds.max.x;
-        newSize.y = renderer.sprite.bounds.max.y;
+        newSize.x = renderer.sprite.bounds.max.x * 1.7f;
+        newSize.y = renderer.sprite.bounds.max.y * 1.7f;
         collider.size = newSize;
         UpdateState(true);
     }

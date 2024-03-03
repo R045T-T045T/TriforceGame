@@ -6,11 +6,19 @@ using static UnityEditor.Progress;
 public class LevelGeneration : MonoBehaviour
 {
     private const float scrollAcceleration = 1.0f;
+
+    private static bool clampedFallSpeed = true;
+    private static bool canScroll = true;
+    private static bool obsCanMove = true;
+    private static float scrollDir = 1.0f; public static float ScrollDir => scrollDir;
+    private static float cumulativeHeight;
+
     private static Vector2 finalBounds; public static Vector2 Bounds => finalBounds;
     public static void SetScrollStatus(bool status) => canScroll = status;
     public static void SetClampFallSpeedStatus(bool status) => clampedFallSpeed = status;
     public static void SetScrollDirection(float dir) => scrollDir = dir;
     public static void SetObsMoveStatus(bool status) => obsCanMove = status;
+
 
 
     [SerializeField] private RuleData[] typePool;
@@ -21,10 +29,6 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private float startOffset = 5;
     [SerializeField] private float scrollSpeedAdditionPerSecond = .001f;
     private List<Rule> obstaclePool = new List<Rule>();
-    private static bool clampedFallSpeed = true;
-    private static bool canScroll = true;
-    private static bool obsCanMove = true;
-    private static float scrollDir = 1.0f; public static float ScrollDir => scrollDir;
     private float currentScrollSpeed;
 
     private void Awake()
@@ -100,9 +104,11 @@ public class LevelGeneration : MonoBehaviour
         float fallSpeed = (scrollSpeed + (Time.time * scrollSpeedAdditionPerSecond)) * scrollDir;
 
         if (clampedFallSpeed) fallSpeed = Mathf.Clamp(fallSpeed, -maxScrollSpeed, maxScrollSpeed);
-        else fallSpeed += (Time.time * scrollSpeedAdditionPerSecond * .25f) * scrollDir;
+        else fallSpeed += (Time.time * scrollSpeedAdditionPerSecond) * scrollDir;
 
         currentScrollSpeed = Mathf.SmoothDamp(currentScrollSpeed, (canScroll ? fallSpeed : 0), ref rf0, scrollAcceleration);
+        cumulativeHeight += currentScrollSpeed * Time.deltaTime;
+        Shader.SetGlobalFloat("_moveHeight", cumulativeHeight);
 
         foreach (Rule item in obstaclePool)
         {
